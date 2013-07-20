@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-		<link type="stylesheet" href="css/sync.css"></link>
+		<link rel="stylesheet" href="css/sync.css"></link>
 		<script src="js/sync.js"></script>
 		<script>
 			var sync = new Sync();
 			addEventListener("load", function () {
-				sync.build(document.forms[0],document.getElementById("sync-output"))
+				sync.build(document.forms[0],document.getElementById("syncoutput"))
 			})
 		</script>
 	</head>
@@ -24,7 +24,7 @@
 				<label><input type="checkbox" value="960">960</label>
 			</fieldset>
 		</form>
-		<div id="sync-output">
+		<div id="syncoutput">
 
 		</div>
 	</body>

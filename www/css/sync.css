@@ -1,0 +1,17 @@
+body {
+}
+#syncoutput {
+	display: table;
+	height: 500px;
+}
+#syncoutput div.cell {
+	display: none;
+}
+#syncoutput div.cell.activated {
+	display: table-cell;
+}
+#syncoutput div.cell iframe {
+	width: 100%;
+	height: 100%;
+	border: 2px dotted silver;
+}
