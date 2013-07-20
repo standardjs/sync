@@ -1,0 +1,466 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sta",
+				"standardArray"
+			],
+			[
+				"tab",
+				"table"
+			],
+			[
+				"table",
+				"table-cell"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"reg",
+				"registeredTypes"
+			],
+			[
+				"cons",
+				"constructor_StandardCollection"
+			],
+			[
+				"stand",
+				"standardMembers"
+			],
+			[
+				"func",
+				"function_Constructor"
+			],
+			[
+				"function_",
+				"function_prototype"
+			],
+			[
+				"object",
+				"object_typeMembers"
+			],
+			[
+				"proper",
+				"propertyName"
+			],
+			[
+				"prop",
+				"propertyName"
+			],
+			[
+				"Stand",
+				"StandardCollection"
+			],
+			[
+				"Stan",
+				"StandardCollection"
+			],
+			[
+				"st",
+				"standardCollection"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"instan",
+				"instanceProperties"
+			],
+			[
+				"constructo",
+				"constructors"
+			],
+			[
+				"ie_DO",
+				"ie_DOMElements_instance"
+			],
+			[
+				"ie_",
+				"ie_DOMElements_constructor"
+			],
+			[
+				"def",
+				"definitions"
+			],
+			[
+				"functi",
+				"functionIsNative"
+			],
+			[
+				"o",
+				"objectsAreTheSame"
+			],
+			[
+				"mem",
+				"membersToMap"
+			],
+			[
+				"cre",
+				"createFastMapperFunction"
+			],
+			[
+				"mode",
+				"moduleName"
+			],
+			[
+				"helper",
+				"helperProperties"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "www/index.htm",
+			"settings":
+			{
+				"buffer_size": 320,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/not a chance.htm",
+			"settings":
+			{
+				"buffer_size": 154,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/js/sync.js",
+			"settings":
+			{
+				"buffer_size": 241,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/css/sync.css",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/JSHint/JSHint.sublime-build",
+	"command_palette":
+	{
+		"height": 311.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Discover Packages"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/christian/Documents/GitHub/standard/src/js/standard.elementcollection.js",
+		"/C/animate.htm",
+		"/C/styles.htc",
+		"/C/never.htm",
+		"/C/Users/christian/Documents/GitHub/standard/src/js/standard.js",
+		"/C/Users/christian/Documents/GitHub/standard/tests/spec/standard.spec.js",
+		"/C/Users/christian/Documents/GitHub/standard/tests/spec/standard.overloader.js",
+		"/C/Users/christian/Documents/GitHub/standard/src/js/standard.collection.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/spec/ie.spec.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.function.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.array.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.typefactory.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/dev/ie.dom.elements.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.all.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/ie.dom.elements.json",
+		"/C/Users/christian/Documents/GitHub/ie/build/min/ie.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/debug-min/ie.dom.elements.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/debug-min/ie.dom.element.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/dev/ie.dom.element.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/dev/ie.js",
+		"/C/Users/christian/Documents/GitHub/ie/bin/build.js",
+		"/H/jist/scripts/jist.standardize.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/ie.html",
+		"/C/input.htm",
+		"/C/Users/christian/Documents/GitHub/ie/build/min/ie.dom.element.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/ie.json",
+		"/H/jist/scripts/jist.function.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.htmlelement.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/spec/ie.helper.spec.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.dom.elements.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/ie-min-debug.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie.elements.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/ie.htmlelements.html",
+		"/C/Users/christian/Documents/GitHub/ie/tests/lib/jshint.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/ie-min.js",
+		"/C/Users/christian/Documents/GitHub/ie/build/ie-min-dev.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/foo.js",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/ie-min.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/lib/z_jshint_spec.js",
+		"/C/Users/christian/Documents/GitHub/ie/.gitignore",
+		"/C/ie.dom.events.level.3.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/codequality.html",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/build.bat",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/foo.reg",
+		"/C/Users/christian/Documents/GitHub/ie/src/js/fdsf.js",
+		"/C/Users/christian/Documents/GitHub/ie/tests/lib/codequality.js",
+		"/C/Users/christian/AppData/Roaming/Sublime Text 2/Packages/Javascript Beautify/Javascript Beautify.sublime-settings",
+		"/C/Users/christian/AppData/Roaming/Sublime Text 2/Packages/User/JavascriptBeautify.sublime-settings",
+		"/C/Users/christian/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/christian/AppData/Roaming/Sublime Text 2/Packages/Javascript Beautify/Default (Windows).sublime-keymap",
+		"/C/Users/christian/AppData/Roaming/Sublime Text 2/Packages/JSHint Gutter/JSHint.sublime-settings",
+		"/C/Users/christian/Documents/GitHub/ie/src/ie.js"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"*.css,G:/Archive",
+			"*.js,G:\\"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"never.htm:26",
+			"}},",
+			", ",
+			"ented\")",
+			"$standard_Standard_",
+			"addEventListener",
+			"text-overflow",
+			"Array.prototype.forEach",
+			"Array.prototype",
+			"console",
+			"extend",
+			"DEBUG",
+			"helper",
+			",",
+			":",
+			"Element",
+			"HTML",
+			"DEBUG"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			",\n		",
+			"},\n		",
+			": function $standard_standard_dispatchEvent() {\n			throw new Error(\"Not implemented\");\n		},",
+			"ented\");",
+			"$standard_standard_",
+			"\",",
+			":\"",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "www/index.htm",
+					"settings":
+					{
+						"buffer_size": 320,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								303,
+								303
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/not a chance.htm",
+					"settings":
+					{
+						"buffer_size": 154,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "www/js/sync.js",
+					"settings":
+					{
+						"buffer_size": 241,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								233,
+								233
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "www/css/sync.css",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 284.0,
+	"status_bar_visible": true
+}
