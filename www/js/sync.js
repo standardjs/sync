@@ -127,10 +127,37 @@
 	}
 	window.Sync.prototype.eventDuplicator = new EventDuplicator()
 })(
-	function EventDuplicator() {},
+	function EventDuplicator() {
+
+	},
 	{
 		duplicateEvent:function (event,targetFrame,selector) {
-			console.log("her",arguments)
+			var possibleTargets = targetFrame.contentDocument.querySelectorAll(selector),
+				target,
+				localEvent;
+			if (possibleTargets.length == 1) {
+				target = possibleTargets[0];
+				
+			} else {
+				var targets = [].filter.apply(possibleTargets,[function (element) {
+					return this.compareElement(event.target,element)
+				},this]);
+				if (targets.length == 1) {
+					target = targets[0];
+				} else {
+					throw new Error("unable to decide which element to target")
+				}
+			}
+			localEvent = this.createLocalEvent(event,target);
+		},
+		compareElement: function (element1,element2) {
+			if (element1.textContent == element2.textContent) {
+				return true
+			}
+			return false
+		},
+		createLocalEvent: function (event,newTarget) {
+			console.log(event,newTarget)
 		}
 
 	}

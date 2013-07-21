@@ -4,6 +4,70 @@
 		"selected_items":
 		[
 			[
+				"que",
+				"querySelectorAll"
+			],
+			[
+				"selec",
+				"selectorBuilder"
+			],
+			[
+				"active",
+				"activatedFrames"
+			],
+			[
+				"acti",
+				"activatedFrames"
+			],
+			[
+				"event",
+				"eventDuplicator"
+			],
+			[
+				"Event",
+				"EventDuplicator"
+			],
+			[
+				"bindEvent",
+				"bindEventToFrame"
+			],
+			[
+				"Ifram",
+				"IFrameEventListener"
+			],
+			[
+				"load",
+				"loadListenerBinding"
+			],
+			[
+				"ac",
+				"activatedFrames"
+			],
+			[
+				"appn",
+				"appendChild"
+			],
+			[
+				"ap",
+				"appendCell"
+			],
+			[
+				"chec",
+				"checkboxes"
+			],
+			[
+				"c",
+				"checkboxChangeHandler"
+			],
+			[
+				"sync",
+				"sync-output"
+			],
+			[
+				"form",
+				"formSubmitHandler"
+			],
+			[
 				"sta",
 				"standardArray"
 			],
@@ -119,23 +183,43 @@
 			"file": "www/index.htm",
 			"settings":
 			{
-				"buffer_size": 320,
+				"buffer_size": 953,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/not a chance.htm",
+			"file": "/C/Users/christian/Documents/GitHub/frames/src/screens.html",
 			"settings":
 			{
-				"buffer_size": 154,
+				"buffer_size": 1264,
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": ";(function (Sync,prototype) {\n	for (var i in prototype) {\n		Sync.prototype[i] = prototype[i];\n	}\n	window.Sync = Sync;\n})(\n	function Sync() {\n		this.frameCells = [];\n		this.activatedFrames = {};\n	},\n	{\n		iframes: null,\n		build: function sync_build(formElement,outputElement) {\n			this.formElement = formElement;\n			this.outputElement = outputElement;\n			this.bindEvents();\n			this.buildFrameCells();\n		},\n		bindEvents: function () {\n			this.formSubmitListenerBinding = this.formSubmitListener.bind(this)\n			this.formElement.addEventListener(\"submit\", this.formSubmitListenerBinding);\n			this.checkboxChangeListenerBinding = this.checkboxChangeListener.bind(this);\n			this.formElement.addEventListener(\"change\",this.checkboxChangeListenerBinding,true);\n			this.loadListenerBinding = this.loadListener.bind(this);\n			document.addEventListener(\"load\",this.loadListenerBinding,true)\n		},\n		formSubmitListenerBinding: null,\n		formSubmitListener: function (event) {\n			var url = event.target.querySelector(\"#url\").value;\n			for (var i in this.activatedFrames) {\n				this.activatedFrames[i].src = url;\n			}\n			event.preventDefault();\n		},\n		checkboxChangeListenerBinding: null,\n		checkboxChangeListener: function (event) {\n			if (event.target.type!=\"checkbox\") {\n				return;\n			}\n			if (event.target.checked) {\n				this.activateFrame(event.target.value);\n			} else {\n				this.deactivateFrame(event.target.value)\n			}\n		},\n		loadListener: function (event) {\n			new this.IFrameEventListener(event.target,this)\n		},\n		buildFrameCells: function () {\n			[].forEach.apply(\n				this.formElement.querySelectorAll(\"input[type=checkbox]\"),\n				[this.buildFrameCellFromCheckbox,this]\n			);\n			this.frameCells.forEach(this.appendCell,this)\n		},\n		buildFrame: function (width,index) {\n			var cell = document.createElement(\"div\"),\n				header =document.createElement(\"div\"),\n				iframe = document.createElement(\"iframe\");\n			header.innerHTML = width;\n			cell.className = \"cell\"\n			cell.id =\"syncCell\"+index;\n			cell.style.minWidth = width+\"px\";\n			cell.appendChild(header)\n			cell.appendChild(iframe)\n			return cell;\n		},\n		buildFrameCellFromCheckbox: function (checkbox,index) {\n			var frameWidth = checkbox.value,\n				frameCell = this.buildFrame(frameWidth,index)\n			this.frameCells.push(frameCell)\n			this.frameCells[\"cell\"+frameWidth] = frameCell;\n		},\n		appendCell: function (cellElement) {\n			this.outputElement.appendChild(cellElement)\n		},\n		activateFrame: function (width) {\n			this.frameCells[\"cell\"+width].classList.add(\"activated\");\n			this.activatedFrames[\"cell\"+width] = this.frameCells[\"cell\"+width].querySelector(\"iframe\");	\n		},\n		deactivateFrame: function (width) {\n			this.frameCells[\"cell\"+width].classList.remove(\"activated\");\n			delete this.activatedFrames[width];\n		},\n		handleFrameEvent: function (iframe,event) {\n			for (var i in this.activatedFrames) {\n				if (this.activatedFrames[i] != iframe) {\n					this.eventDuplicator.duplicateEvent(event,this.activatedFrames[i],this.selectorBuilder.getSelector(event.target));\n				}  \n			}\n			\n		}\n	}\n);\n\n(function (IFrameEventListener,prototype) {\n	window.Sync.prototype.IFrameEventListener = IFrameEventListener;\n	for (var i in prototype) {\n		IFrameEventListener.prototype[i] = prototype[i];\n	}\n})(\n	function IFrameEventListener(iframe,sync) {\n		this.iframe = iframe;\n		this.document = iframe.contentDocument;\n		this.sync = sync;\n		this.bindEvents();\n	},\n	{\n		frameEvents: [\"click\"],\n		bindEvents: function () {\n			this.frameEvents.forEach(\n				function (eventName) {\n					this.document.addEventListener(eventName,this,true)\n				},\n				this\n			);\n		},\n		handleEvent: function (event) {\n			this.sync.handleFrameEvent(this.iframe,event)\n		}\n	}\n);\n\n(function (EventDuplicator,prototype) {\n	for (var i in prototype) {\n		EventDuplicator.prototype[i] = prototype[i];\n	}\n	window.Sync.prototype.eventDuplicator = new EventDuplicator()\n})(\n	function EventDuplicator() {},\n	{\n		duplicateEvent:function (event,targetFrame,selector) {\n			var possibleTargets = targetFrame.contentDocument.querySelectorAll(selector),\n				target;\n			if (possibleTargets.length == 1) {\n\n				target = possibleTargets[0];\n				\n			} else {\n				var targets = [].filter.apply(function (node) {\n					if (node.innerText)\n				})\n			}\n		}\n\n	}\n);\n(function (SelectorBuilder,prototype){\n	for (var i in prototype) {\n		SelectorBuilder.prototype[i] = prototype[i];\n	}\n	window.Sync.prototype.selectorBuilder = new SelectorBuilder()\n})(\n	function SelectorBuilder() {\n\n\n	},\n	{\n		getSelector: function(element) {\n			var selectorArray = [],\n				currentElement = element,\n				body = element.ownerDocument.body;\n			while (currentElement && currentElement!=body.parentElement) {\n				selectorArray.push(this.getElementSelector(currentElement));\n				currentElement = currentElement.parentElement;\n			}\n			return selectorArray.reverse().join('>')\n		},\n		getElementSelector: function (element) {\n			var selector = [element.tagName.toLowerCase()];\n			if (element.id) {\n				selector.push('#'+element.id);\n			} else {//it's a bit of a hard one because javascript can change the dom/element completely!!!\n\n\n			}\n			return selector.join('')\n		}\n\n	}\n\n)",
 			"file": "www/js/sync.js",
+			"file_size": 5234,
+			"file_write_time": 130188204794669886,
 			"settings":
 			{
-				"buffer_size": 241,
+				"buffer_size": 5134,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/test.htm",
+			"settings":
+			{
+				"buffer_size": 143,
+				"line_ending": "Windows",
+				"name": "<!doctype html>"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		},
@@ -143,7 +227,7 @@
 			"file": "www/css/sync.css",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 244,
 				"line_ending": "Windows"
 			}
 		}
@@ -176,6 +260,7 @@
 	},
 	"file_history":
 	[
+		"/C/not a chance.htm",
 		"/C/Users/christian/Documents/GitHub/standard/src/js/standard.elementcollection.js",
 		"/C/animate.htm",
 		"/C/styles.htc",
@@ -248,6 +333,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"console",
+			"Handler",
 			"never.htm:26",
 			"}},",
 			", ",
@@ -273,6 +360,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Listener",
 			",\n		",
 			"},\n		",
 			": function $standard_standard_dispatchEvent() {\n			throw new Error(\"Not implemented\");\n		},",
@@ -291,7 +379,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -299,15 +387,15 @@
 					"file": "www/index.htm",
 					"settings":
 					{
-						"buffer_size": 320,
+						"buffer_size": 953,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								303,
-								303
+								398,
+								398
 							]
 						],
 						"settings":
@@ -322,26 +410,27 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/C/not a chance.htm",
+					"file": "/C/Users/christian/Documents/GitHub/frames/src/screens.html",
 					"settings":
 					{
-						"buffer_size": 154,
+						"buffer_size": 1264,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								27,
+								218
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 170.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -351,20 +440,47 @@
 					"file": "www/js/sync.js",
 					"settings":
 					{
-						"buffer_size": 241,
+						"buffer_size": 5134,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								233,
-								233
+								4169,
+								4169
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1648.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "www/test.htm",
+					"settings":
+					{
+						"buffer_size": 143,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								113,
+								113
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<!doctype html>",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -373,8 +489,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "www/css/sync.css",
+					"buffer": 4,
 					"settings":
 					{
 						"buffer_size": 0,
@@ -386,6 +501,33 @@
 							[
 								0,
 								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "www/css/sync.css",
+					"settings":
+					{
+						"buffer_size": 244,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6,
+								6
 							]
 						],
 						"settings":
