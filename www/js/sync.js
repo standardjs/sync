@@ -44,6 +44,7 @@
 			}
 		},
 		loadListener: function (event) {
+			event.target.contentWindow.XMLHttpRequest = this.MockXMLHttpRequest
 			new this.IFrameEventListener(event.target,this)
 		},
 		buildFrameCells: function () {
@@ -248,33 +249,34 @@
 
 );
 
+
 (function (){
-	var trueRequest = self.XMLHttpRequest;
+
 
 	function MockXMLHttpRequest() {
-		this.request = new trueRequest();
+		this.request = new XMLHttpRequest();
 		this.request.onload = this.onloadHandler.bind(this)
 		this.id = MockXMLHttpRequest.count++
 	}
+	window.Sync.prototype.MockXMLHttpRequest = MockXMLHttpRequest;
+
 	MockXMLHttpRequest.count = 0;
 	MockXMLHttpRequest.all = {};
 	MockXMLHttpRequest.prototype = {
-		constructor: trueRequest,
+		constructor: XMLHttpRequest,
 		open: function (url,async,user,password) {
 			var all = MockXMLHttpRequest.all
 			var identifier = [].join.apply(arguments,['|']);
-			console.log(identifier)
+			this.request.lastOpenRequest = identifier;
 			if (!all[identifier]) {
 				all[identifier] = {request:this.request,mockRequests:[this],sent:false};
 				this.request.open.apply(this.request,arguments);
 			} else {
 				all[identifier].mockRequests.push(this);
 				if (all[identifier].loaded) {
-				this.onloadHandler()
+					this.onloadHandler()
+				}
 			}
-			}
-			this.request.lastOpenRequest = identifier;
-
 			
 		},
 		send: function () {
@@ -285,44 +287,26 @@
 			}
 		},
 		onloadHandler: function () {
-			var requests = MockXMLHttpRequest.all[this.request.lastOpenRequest];
+			var requests = MockXMLHttpRequest.all[this.request.lastOpenRequest],
+				finishedRequest = requests.request;
 			while (requests.mockRequests.length) {
 				var request = requests.mockRequests.shift()
-				request.mapRequestProperties(this.request);
+				request.mapRequestProperties(finishedRequest);
 				request.onload();
 			}
 			requests.loaded = true;
 		},
 		mapRequestProperties: function (request) {
+			//console.log(request)
 			Object.keys(request).forEach(
 				function(key) {
-					var type = typeof this.request[key]
+					var type = typeof request[key]
 					if (type!="function") {
-						this[key] = this.request[key]
+						this[key] = request[key]
 					}
 				}, this
 			)
 		}
 	}
-	self.XMLHttpRequest = MockXMLHttpRequest
-
-
-		function reqListener () {
-		  console.log(this.responseText);
-		};
-
-		var oReq = new self.XMLHttpRequest();
-		oReq.onload = reqListener;
-		oReq.open("get", "test2.htm", true);
-		oReq.send();
-		setTimeout(function () {
-			var iReq = new self.XMLHttpRequest();
-			oReq.onload = reqListener;
-			oReq.open("get", "test2.htm", true);
-			oReq.send();
-
-		},2000)
-
-
-
+	
 })()

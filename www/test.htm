@@ -1,6 +1,22 @@
 <!doctype html>
 
 <html>
+	<head>
+		<script>
+		function delay() {
+			function reqListener () {
+			  console.log(this);
+			};
+
+			var oReq = new self.XMLHttpRequest();
+			oReq.onload = reqListener;
+			oReq.open("get", "test2.htm", true);
+			oReq.send();
+		}
+		setTimeout(delay,2000)
+	</script>
+
+	</head>
 	<body>
 		<a href="test2.htm">sdfsdf<span>foo</span></a>
 		<a href="#food">ssdadsdf<span>foods</span></a>
