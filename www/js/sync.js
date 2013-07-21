@@ -133,9 +133,14 @@
 	},
 	{
 		duplicateEvent:function (event,targetFrame,selector) {
-			var possibleTargets = targetFrame.contentDocument.querySelectorAll(selector),
+			var possibleTargets,
 				target,
 				localEvent;
+			if (selector) {
+				possibleTargets = targetFrame.contentDocument.querySelectorAll(selector)
+			} else {
+				possibleTargets = [targetFrame.contentDocument]
+			}
 			if (possibleTargets.length == 1) {
 				target = possibleTargets[0];
 				
