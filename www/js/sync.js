@@ -84,9 +84,10 @@
 		},
 		handleFrameEvent: function (iframe,event) {
 			if (!event.mocked) {
+				var selector = this.selectorBuilder.getSelector(event.target)
 				for (var i in this.activatedFrames) {
 					if (this.activatedFrames[i] != iframe) {
-						this.eventDuplicator.duplicateEvent(event,this.activatedFrames[i],this.selectorBuilder.getSelector(event.target));
+						this.eventDuplicator.duplicateEvent(event,this.activatedFrames[i],selector);
 					}  
 				}
 			}
@@ -107,7 +108,7 @@
 		this.bindEvents();
 	},
 	{
-		frameEvents: ["click"],
+		frameEvents: ["click","input","change"],
 		bindEvents: function () {
 			this.frameEvents.forEach(
 				function (eventName) {
@@ -133,6 +134,11 @@
 	},
 	{
 		duplicateEvent:function (event,targetFrame,selector) {
+			var target = this.getTarget(event,targetFrame,selector);
+			this.syncElementStates(event.target,target)
+			this.createLocalEvent(event,target);
+		},
+		getTarget: function (event,targetFrame,selector) {
 			var possibleTargets,
 				target,
 				localEvent;
@@ -154,7 +160,13 @@
 					throw new Error("unable to decide which element to target")
 				}
 			}
-			localEvent = this.createLocalEvent(event,target);
+			return target;
+		},
+		syncElementStates: function (sourceElement, targetElement) {
+			if (sourceElement.value) {
+				targetElement.value = sourceElement.value
+			}
+
 		},
 		compareElement: function (element1,element2) {
 			if (element1.textContent == element2.textContent) {
@@ -163,7 +175,7 @@
 			return false
 		},
 		createLocalEvent: function (event,newTarget) {
-			var localWindow = newTarget.ownerDocument.defaultView,
+			var localWindow = newTarget.ownerDocument? newTarget.ownerDocument.defaultView : newTarget.defaultView,
 				newEvent = this.eventFactories[this.getEventConstructor(event)](event,newTarget);
 			newTarget.dispatchEvent(newEvent);
 		},
@@ -177,7 +189,7 @@
 					srcEvent.type, 
                     srcEvent.canBubbleArg, 
                     srcEvent.cancelableArg, 
-                    target.ownerDocument.defaultView, 
+                    target.ownerDocument? target.ownerDocument.defaultView : target.defaultView, 
                     srcEvent.detail, 
                     srcEvent.screenX, 
                     srcEvent.screenY, 
@@ -192,8 +204,10 @@
                 );
                 event.mocked = true;
                 return event;
+			},
+			Event: function (srcEvent,target) {
+				return new Event(srcEvent)
 			}
-
 		}
 
 	}
@@ -232,4 +246,83 @@
 
 	}
 
-)
+);
+
+(function (){
+	var trueRequest = self.XMLHttpRequest;
+
+	function MockXMLHttpRequest() {
+		this.request = new trueRequest();
+		this.request.onload = this.onloadHandler.bind(this)
+		this.id = MockXMLHttpRequest.count++
+	}
+	MockXMLHttpRequest.count = 0;
+	MockXMLHttpRequest.all = {};
+	MockXMLHttpRequest.prototype = {
+		constructor: trueRequest,
+		open: function (url,async,user,password) {
+			var all = MockXMLHttpRequest.all
+			var identifier = [].join.apply(arguments,['|']);
+			console.log(identifier)
+			if (!all[identifier]) {
+				all[identifier] = {request:this.request,mockRequests:[this],sent:false};
+				this.request.open.apply(this.request,arguments);
+			} else {
+				all[identifier].mockRequests.push(this);
+				if (all[identifier].loaded) {
+				this.onloadHandler()
+			}
+			}
+			this.request.lastOpenRequest = identifier;
+
+			
+		},
+		send: function () {
+			var requests = MockXMLHttpRequest.all[this.request.lastOpenRequest];
+			if (!requests.sent) {
+				requests.request.send();
+				requests.sent = true;
+			}
+		},
+		onloadHandler: function () {
+			var requests = MockXMLHttpRequest.all[this.request.lastOpenRequest];
+			while (requests.mockRequests.length) {
+				var request = requests.mockRequests.shift()
+				request.mapRequestProperties(this.request);
+				request.onload();
+			}
+			requests.loaded = true;
+		},
+		mapRequestProperties: function (request) {
+			Object.keys(request).forEach(
+				function(key) {
+					var type = typeof this.request[key]
+					if (type!="function") {
+						this[key] = this.request[key]
+					}
+				}, this
+			)
+		}
+	}
+	self.XMLHttpRequest = MockXMLHttpRequest
+
+
+		function reqListener () {
+		  console.log(this.responseText);
+		};
+
+		var oReq = new self.XMLHttpRequest();
+		oReq.onload = reqListener;
+		oReq.open("get", "test2.htm", true);
+		oReq.send();
+		setTimeout(function () {
+			var iReq = new self.XMLHttpRequest();
+			oReq.onload = reqListener;
+			oReq.open("get", "test2.htm", true);
+			oReq.send();
+
+		},2000)
+
+
+
+})()
