@@ -1,5 +1,14 @@
 body {
 }
+
+#backbutton,
+#forwardbutton {
+	font-family: Wingdings;
+}
+#refreshbutton {
+	font-family: "Wingdings 3";
+	font-weight: bold;
+}
 #syncoutput {
 	display: table;
 	height: 500px;
