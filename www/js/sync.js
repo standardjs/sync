@@ -83,12 +83,13 @@
 			delete this.activatedFrames[width];
 		},
 		handleFrameEvent: function (iframe,event) {
-			for (var i in this.activatedFrames) {
-				if (this.activatedFrames[i] != iframe) {
-					this.eventDuplicator.duplicateEvent(event,this.activatedFrames[i],this.selectorBuilder.getSelector(event.target));
-				}  
+			if (!event.mocked) {
+				for (var i in this.activatedFrames) {
+					if (this.activatedFrames[i] != iframe) {
+						this.eventDuplicator.duplicateEvent(event,this.activatedFrames[i],this.selectorBuilder.getSelector(event.target));
+					}  
+				}
 			}
-			
 		}
 	}
 );
@@ -157,7 +158,37 @@
 			return false
 		},
 		createLocalEvent: function (event,newTarget) {
-			console.log(event,newTarget)
+			var localWindow = newTarget.ownerDocument.defaultView,
+				newEvent = this.eventFactories[this.getEventConstructor(event)](event,newTarget);
+			newTarget.dispatchEvent(newEvent);
+		},
+		getEventConstructor: function (event) {
+			return event.constructor.toString().match(/^function\s*([^(]*)\s*\(/)[1];
+		},
+		eventFactories: {
+			MouseEvent: function (srcEvent,target) {
+				var event = new MouseEvent(srcEvent.type);
+				event.initMouseEvent(
+					srcEvent.type, 
+                    srcEvent.canBubbleArg, 
+                    srcEvent.cancelableArg, 
+                    target.ownerDocument.defaultView, 
+                    srcEvent.detail, 
+                    srcEvent.screenX, 
+                    srcEvent.screenY, 
+                    srcEvent.clientX, 
+                    srcEvent.clientY, 
+                    srcEvent.ctrlKey, 
+                    srcEvent.altKey, 
+                    srcEvent.shiftKey, 
+                    srcEvent.metaKey, 
+                    srcEvent.buttonArg, 
+                    null//srcEvent.relatedTargetArg
+                );
+                event.mocked = true;
+                return event;
+			}
+
 		}
 
 	}
